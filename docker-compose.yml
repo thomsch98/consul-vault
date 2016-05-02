@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+  consuldta:
+    image: registry.haufe.io/hgg/secrets.consul:dev
+    command: /bin/true
+    volumes:
+    - "/var/consul"
+    restart: "no"
+    
+  consul:
+    image: registry.haufe.io/hgg/secrets.consul:dev
+    ports:
+    - "8300:8300"
+    - "8301:8301"
+    - "8301:8301/udp"
+    - "8302:8302"
+    - "8302:8302/udp"
+    - "8400:8400"
+    - "8500:8500"
+    - "8600:8600"
+    - "8600:8600/udp"
+    volumes_from:
+    - "consuldta"
+    restart: "unless-stopped"
+
+  vault:
+    image: registry.haufe.io/hgg/secrets.vault:dev
+    ports:
+    - "8200:8200"
+    depends_on:
+    - "consul"
+
+  vaultsh:
+    image: registry.haufe.io/hgg/secrets.vault:dev
+    environment:
+    - "VAULT_ADDR=http://vault:8200"
+    #command: tail -f /dev/null
+    #command: /init.sh
+    command: /bin/true
+    depends_on:
+    - "vault"
+    volumes:
+    - "./data/vaultsh:/data"

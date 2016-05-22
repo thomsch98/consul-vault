@@ -8,7 +8,9 @@ services:
     - "/var/consul"
     restart: "no"
     
-  consul:
+  consul-bootstrap:
+    build:
+      context: consul
     image: registry.haufe.io/hgg/secrets.consul:dev
     ports:
     - "8300:8300"
@@ -23,13 +25,77 @@ services:
     volumes_from:
     - "consuldta"
     restart: "unless-stopped"
+    environment:
+    - "BOOTSTRAP=true"
+    - "SERVER=true"
+    - "START_JOIN=\"consul-bootstrap\" \"consul-server\""
+    
+  consuldta2:
+    image: registry.haufe.io/hgg/secrets.consul:dev
+    command: /bin/true
+    volumes:
+    - "/var/consul"
+    restart: "no"
+    
+  consul-server:
+    build:
+      context: consul
+    image: registry.haufe.io/hgg/secrets.consul:dev
+    ports:
+    - "8300:8300"
+    - "8301:8301"
+    - "8301:8301/udp"
+    - "8302:8302"
+    - "8302:8302/udp"
+    - "8400:8400"
+    - "8500:8500"
+    - "8600:8600"
+    - "8600:8600/udp"
+    volumes_from:
+    - "consuldta2"
+    restart: "unless-stopped"    
+    environment:
+    - "BOOTSTRAP=false"
+    - "SERVER=true"
+    - "START_JOIN=\"consul-bootstrap\" \"consul-server\""
+    
+  consuldta3:
+    image: registry.haufe.io/hgg/secrets.consul:dev
+    command: /bin/true
+    volumes:
+    - "/var/consul"
+    restart: "no"
+    
+  consul-client:
+    build:
+      context: consul
+    image: registry.haufe.io/hgg/secrets.consul:dev
+    ports:
+    - "8300:8300"
+    - "8301:8301"
+    - "8301:8301/udp"
+    - "8302:8302"
+    - "8302:8302/udp"
+    - "8400:8400"
+    - "8500:8500"
+    - "8600:8600"
+    - "8600:8600/udp"
+    volumes_from:
+    - "consuldta3"
+    restart: "unless-stopped"    
+    environment:
+    - "BOOTSTRAP=false"
+    - "SERVER=FALSE"
+    - "START_JOIN=\"consul-bootstrap\" \"consul-server\""
 
   vault:
+    build:
+      context: vault
     image: registry.haufe.io/hgg/secrets.vault:dev
     ports:
     - "8200:8200"
     depends_on:
-    - "consul"
+    - "consul-server"
 
   vaultsh:
     image: registry.haufe.io/hgg/secrets.vault:dev

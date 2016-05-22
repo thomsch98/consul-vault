@@ -1,0 +1,16 @@
+{
+  "server": ${SERVER},
+  "bootstrap": ${BOOTSTRAP},
+  "datacenter": "dc1",
+  "data_dir": "/var/consul",
+  "encrypt": "Dt3P9SpKGAR/DIUN1cDirg==",
+  "bind_addr": "0.0.0.0",
+  "client_addr": "0.0.0.0",
+  "log_level": "INFO",
+  "enable_syslog": true,
+  "ui": true,
+  "dns_config": {
+    "allow_stale": false
+  }
+  "start_join": [${START_JOIN}]
+}

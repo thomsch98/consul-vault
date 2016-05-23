@@ -9,8 +9,6 @@ services:
     restart: "no"
     
   consul:
-    build:
-      context: consul
     image: registry.haufe.io/hgg/secrets.consul:dev
     ports:
     - "8300:8300"
@@ -28,8 +26,6 @@ services:
     env_file: variables.env
 
   vault:
-    build:
-      context: vault
     image: registry.haufe.io/hgg/secrets.vault:dev
     ports:
     - "8200:8200"

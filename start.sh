@@ -1,8 +1,20 @@
 #!/bin/bash
 
+if [ "$1" = "" ] ; then
+    echo "we need at least one argument to forward to docker-compose :-)"
+    exit 1
+fi
+
+DIR=$(dirname $0)
+NAME=$(basename $0 .start.sh)
+if [ "$NAME" = "start.sh" ] ; then
+    echo "Rename script or use symbolic link"
+    exit 2
+fi
+
+DOTENV=$DIR/.$NAME.env
+
 # If available, read environment variables from file .env
-[ -f ".env" ] && export $(cat .env | grep -v ^# | xargs)
+[ -f "$DOTENV" ] && export $(cat $DOTENV | grep -v ^# | xargs)
 
-BOOTSTRAP=true SERVER=true docker-compose config 
-
-BOOTSTRAP=false SERVER=true docker-compose config
+docker-compose $@

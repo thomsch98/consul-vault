@@ -4,15 +4,15 @@ services:
   consuldta:
 #    build:
 #      context: hgg-ida.secrets.consul
-    image: registry.haufe.io/hgg/secrets.consul:dev
+    image: registry.haufe.io/hgg/secrets-consul:dev
     volumes:
     - "/var/consul"
     entrypoint: /bin/true
-    
+
   consul:
 #    build:
 #      context: hgg-ida.secrets.consul
-    image: registry.haufe.io/hgg/secrets.consul:dev
+    image: registry.haufe.io/hgg/secrets-consul:dev
     ports:
     - "8300:8300"
     - "8301:8301"
@@ -31,7 +31,7 @@ services:
   vault:
 #    build:
 #      context: hgg-ida.secrets.vault
-    image: registry.haufe.io/hgg/secrets.vault:dev
+    image: registry.haufe.io/hgg/secrets-vault:dev
     ports:
     - "8200:8200"
     depends_on:

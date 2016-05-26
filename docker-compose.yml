@@ -31,7 +31,7 @@ services:
       driver: "fluentd"
       options:
         fluentd-address: "${FLUENTD}:24224"
-        
+        tag: "docker.{{.Name}}"
 
   vault:
 #    build:
@@ -46,3 +46,4 @@ services:
       driver: "fluentd"
       options:
         fluentd-address: "${FLUENTD}:24224"
+        tag: "docker.{{.Name}}"

@@ -32,7 +32,6 @@ services:
       options:
         fluentd-address: "${FLUENTD}:24224"
         fluentd-async-connect: "true"
-        tag: "docker.{{.Name}}"
 
   vault:
 #    build:
@@ -48,4 +47,3 @@ services:
       options:
         fluentd-address: "${FLUENTD}:24224"
         fluentd-async-connect: "true"
-        tag: "docker.{{.Name}}"

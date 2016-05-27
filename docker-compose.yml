@@ -31,7 +31,7 @@ services:
       driver: "fluentd"
       options:
         fluentd-address: "${FLUENTD}:24224"
-        fluentd-async-connect: true
+        fluentd-async-connect: "true""
         tag: "docker.{{.Name}}"
 
   vault:
@@ -47,5 +47,5 @@ services:
       driver: "fluentd"
       options:
         fluentd-address: "${FLUENTD}:24224"
-        fluentd-async-connect: true
+        fluentd-async-connect: "true""
         tag: "docker.{{.Name}}"

@@ -27,11 +27,11 @@ services:
     - "consuldta"
     restart: "unless-stopped"
     env_file: variables.env
-#    logging:
-#      driver: "fluentd"
-#      options:
-#        fluentd-address: "${FLUENTD}:24224"
-#        fluentd-async-connect: "true"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: "${FLUENTD}:24224"
+        fluentd-async-connect: "true"
 
   vault:
 #    build:
@@ -42,8 +42,8 @@ services:
     depends_on:
     - "consul"
     env_file: variables.env
-#    logging:
-#      driver: "fluentd"
-#      options:
-#        fluentd-address: "${FLUENTD}:24224"
-#        fluentd-async-connect: "true"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: "${FLUENTD}:24224"
+        fluentd-async-connect: "true"

@@ -1,6 +1,13 @@
 version: '2'
 
 services:
+  haproxy:
+    ports:
+    - "8200:8200"
+    - "8500:8500"
+    build:
+      context: haproxy
+      
   consuldta:
 #    build:
 #      context: hgg-ida.secrets.consul
@@ -20,7 +27,7 @@ services:
     - "8302:8302"
     - "8302:8302/udp"
     - "8400:8400"
-    - "8500:8500"
+    - "18500:8500"
     - "8600:8600"
     - "8600:8600/udp"
     volumes_from:
@@ -38,7 +45,7 @@ services:
 #      context: hgg-ida.secrets.vault
     image: registry.haufe.io/hgg/secrets-vault:dev
     ports:
-    - "8200:8200"
+    - "18200:8200"
     depends_on:
     - "consul"
     env_file: variables.env

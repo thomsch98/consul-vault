@@ -5,6 +5,7 @@ services:
     ports:
     - "8200:8200"
     - "8500:8500"
+    - "1936:1936"
     build:
       context: haproxy
       

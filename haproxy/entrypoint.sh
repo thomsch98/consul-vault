@@ -22,7 +22,25 @@ defaults
     timeout connect 5000ms
     timeout client 50000ms
     timeout server 50000ms
+    
+listen stats *:1936
+    mode            http
+    log             global
 
+    maxconn 10
+
+    clitimeout      100s
+    srvtimeout      100s
+    contimeout      100s
+    timeout queue   100s
+
+    stats enable
+    stats hide-version
+    stats refresh 30s
+    stats show-node
+    stats auth stats:stats
+    stats uri  /
+        
 frontend consul-http-in
     bind *:8500
     default_backend consul-servers
